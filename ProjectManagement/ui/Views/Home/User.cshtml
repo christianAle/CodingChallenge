@@ -1,0 +1,56 @@
+﻿@using UI.Models
+@model User
+
+<br>
+
+<div class="container">
+    <div class="row justify-content-md-center">
+        <form id="userForm">
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(x => x.FirstName)
+                </div>
+                @Html.TextBoxFor(x => x.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.FirstName, "", new { @class = "text-danger  " })
+
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(x => x.LastName)
+                </div>
+                @Html.TextBoxFor(x => x.LastName, new { @class = "form-control" })
+            </div>
+
+            <div class="form-group">
+                <button onclick="saveUser()" class="btn btn-primary pull-left">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    @(Html.Kendo().Grid<User>()
+    .Name("Users")
+    .Columns(columns =>
+    {
+        columns.Bound(x => x.Id).Hidden();
+        columns.Bound(x => x.FirstName).Title("First Name");
+        columns.Bound(x => x.LastName).Title("Last Name");
+
+    }
+    )
+    .Scrollable()
+    .DataSource(datasource => datasource.Ajax()
+      .AutoSync(false)
+      .Model(model =>
+              {
+          model.Id(x => x.Id);
+          model.Field(x => x.FirstName);
+          model.Field(x => x.LastName);
+      })
+      .Read(read => read.Action("GetUsers", "User").Type(HttpVerbs.Post)))
+    )
+</div>
+
+@Scripts.Render("~/Scripts/User.js")

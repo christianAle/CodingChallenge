@@ -1,0 +1,69 @@
+﻿@using UI.Models
+@model Project
+
+
+<div class="container">
+    <div class="row justify-content-md-center">
+        <form id="userForm">
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(x => x.StartDate)
+                </div>
+                @(Html.Kendo().DatePicker()
+                 .Name("StartDate")
+                 .Min( DateTime.Today)
+                 )
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(x => x.EndDate)
+                </div>
+                @(Html.Kendo().DatePicker()
+                                .Name("EndDate")
+                                .Min(DateTime.Today.AddDays(1))
+                )
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(x => x.Credits)
+                </div>
+                @Html.TextBoxFor(x => x.Credits , new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <button onclick="saveProject()" class="btn btn-primary pull-left">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="container">
+    @(Html.Kendo().Grid<Project>()
+    .Name("Projects")
+    .Columns(columns =>
+    {
+        columns.Bound(x => x.Id).Title("Project Number");
+        columns.Bound(x => x.StartDate).Title("Start Date").Format("{0:MM/dd/yyyy}");
+        columns.Bound(x => x.EndDate).Title("End Date").Format("{0:MM/dd/yyyy}");
+        columns.Bound(x => x.Credits).Title("Credits");
+    }
+    )
+    .Scrollable()
+    .DataSource(datasource => datasource.Ajax()
+      .AutoSync(false)
+      .Model(model =>
+              {
+          model.Id(x => x.Id);
+          model.Field(x => x.StartDate);
+          model.Field(x => x.EndDate);
+          model.Field(x => x.Credits);
+
+      })
+      .Read(read => read.Action("GetProjects", "Project").Type(HttpVerbs.Post)))
+    )
+</div>
+
+@Scripts.Render("~/Scripts/Project.js")
+
+
+
