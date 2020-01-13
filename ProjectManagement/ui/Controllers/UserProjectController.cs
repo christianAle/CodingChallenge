@@ -47,23 +47,32 @@ namespace UI.Controllers
             return View();
         }
 
-        public ActionResult GetUserProjects([DataSourceRequest] DataSourceRequest request)
+        [HttpPost]
+        public ActionResult GetUserProjects(int id)
         {
             try
             {
                 var result = UserProjectService.Retrive();
                 var userProjects = new List<Models.UserProject>();
-                if (result != null)
-                {
-                    userProjects = result.Select(x => new Models.UserProject()
-                    {
-                        User = x.User,
-                        Project = x.Project,
-                        isActive = x.IsActive,
-                        AssignedDate = x.AssignedDate
+                var projects =   ProjectService.Retrive();
+                var resultProject = new List<Models.Project>();
 
-                    }).ToList();
-                    return this.Json(userProjects.ToDataSourceResult(request));
+                if (result != null && projects != null)
+                {
+                    foreach (var us in userProjects) {
+                        foreach (var p in projects) {
+                            if (us.UserId == id  && p.Id == us.ProjectId)
+                            {
+                                resultProject.Add(new Models.Project() {
+                                    Id = p.Id,
+                                    StartDate = p.StartDate,
+                                    EndDate = p.EndDate,
+                                    Credits = p.Credits
+                                });
+                            }
+                        } 
+                    }
+                    return this.Json(resultProject);
                 }
                 else
                 {
@@ -112,7 +121,7 @@ namespace UI.Controllers
 
         [HttpPost]
 
-        public JsonResult GetProjects(int id )
+        public JsonResult GetProjects([DataSourceRequest] DataSourceRequest request)
         {
             try
             {

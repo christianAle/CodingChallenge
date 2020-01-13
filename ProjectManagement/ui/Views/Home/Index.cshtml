@@ -24,7 +24,11 @@
                             read.Action("GetUsers", "UserProject").Type(HttpVerbs.Post);
                         });
                     })
-                 .Events(e=>e.Change("onProjectsChange()"))
+                 .Events(e =>
+                    {
+                        e.Change("onProjectsChange()").DataBound("onDataBound");
+                    })
+
                 )
             </div>
         </form>
@@ -54,13 +58,8 @@
           model.Field(x => x.Credits);
 
       })
-      .Read(read => read.Action("GetProjects", "Project").Type(HttpVerbs.Post)))
-    )
+      ))
 </div>
 
+
 @Scripts.Render("~/Scripts/UserProject.js")
-
-
-
-
-

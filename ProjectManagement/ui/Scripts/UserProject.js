@@ -22,20 +22,23 @@
 }
 
 function onProjectsChange()
-{
-    var id = $("#Users").val();
-    var grid = $("#projects").data("kendoGrid");
+{   
+    $("#Users").data("kendoDropDownList").value();
     $.ajax({
-        url: "/UserProject/UserProject",
+        url: "/GetUserProjects/UserProject",
         type: 'POST',
-        data: id,
+        data: "",
         success: function (data) {
-            var grid = $("#projects").data("kendoGrid");
+            var grid = $("#Projects").data("kendoGrid");
             grid.setDataSource(dataSource);
             grid.setDataSource(data);
             //$("#projects").data("kendoGrid").read();
         }
     });
     
+}
+
+function onDataBound(e) {
+    e.sender.value("--");
 }
 
