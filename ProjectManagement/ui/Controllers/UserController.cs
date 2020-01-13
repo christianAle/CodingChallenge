@@ -23,7 +23,7 @@ namespace UI.Controllers
                 Repository.User userData = new Repository.User();
                 userData.FirstName = data.FirstName;
                 userData.LastName = data.LastName;
-                UserService.CreateUser(userData);
+                UserService.Create(userData);
             }
             catch (Exception ex)
             {
@@ -38,7 +38,7 @@ namespace UI.Controllers
         {
             try
             {   
-                var result = UserService.getAll();
+                var result = UserService.Retrive();
                 var UserList = new List<Models.User>();
                 if (result != null)
                 {

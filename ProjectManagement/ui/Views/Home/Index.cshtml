@@ -24,54 +24,8 @@
                             read.Action("GetUsers", "UserProject").Type(HttpVerbs.Post);
                         });
                     })
+                 .Events(e=>e.Change("onProjectsChange()"))
                 )
-            </div>
-
-
-            <div class="form-group">
-                <div class="col-md-3">
-                    @Html.LabelFor(x => x.Project)
-                </div>
-                @(Html.Kendo().DropDownListFor(x => x.Project)
-                 .Name("Projects")
-                 .DataTextField("Id")
-                 .DataValueField("Id")
-                 .DataSource(source =>
-                    {
-                        source.Read(read =>
-                        {
-                            read.Action("GetProjects", "UserProject").Type(HttpVerbs.Post);
-                        });
-                    })
-                )
-            </div>
-            <div class="form-group">
-                <div class="col-md-3">
-                    @Html.LabelFor(x => x.isActive)
-                </div>
-                @Html.DropDownListFor(m => m.isActive, new SelectList(
-                new[]
-                    {
-                        new { Value = "true", Text = "Active" },
-                        new { Value = "false", Text = "Inactive" },
-                    },
-                    "Value",
-                    "Text",
-                    Model
-
-               ))
-
-            </div>
-            <div class="form-group">
-                <div class="col-md-3">
-                    @Html.LabelFor(x => x.AssignedDate)
-                </div>
-                @(Html.Kendo().DatePickerFor(x => x.AssignedDate)
-                                .Name("AssignedDate")
-                )
-            </div>
-            <div class="form-group">
-                <button onclick="saveUserProject()" class="btn btn-primary pull-left">Submit</button>
             </div>
         </form>
     </div>
@@ -79,13 +33,14 @@
 
 <div class="container">
     @(Html.Kendo().Grid<Project>()
-    .Name("UserProject")
+    .Name("Projects")
+
     .Columns(columns =>
     {
-        columns.Bound(x => x.User.FirstName).Title("User");
-        columns.Bound(x => x.Project.Id).Title("Project Number");
-        columns.Bound(x => x.isActive).Title("Status");
-        columns.Bound(x => x.AssignedDate).Title("End Date").Format("{0:MM/dd/yyyy}");
+        columns.Bound(x => x.Id).Title("Project Number");
+        columns.Bound(x => x.StartDate).Title("Start Date").Format("{0:MM/dd/yyyy}");
+        columns.Bound(x => x.EndDate).Title("End Date").Format("{0:MM/dd/yyyy}");
+        columns.Bound(x => x.Credits).Title("Credits");
     }
     )
     .Scrollable()
@@ -93,13 +48,13 @@
       .AutoSync(false)
       .Model(model =>
               {
-          model.Field(x => x.User);
-          model.Field(x => x.Project);
-          model.Field(x => x.isActive);
-          model.Field(x => x.isActive);
+          model.Id(x => x.Id);
+          model.Field(x => x.StartDate);
+          model.Field(x => x.EndDate);
+          model.Field(x => x.Credits);
 
       })
-      
+      .Read(read => read.Action("GetProjects", "Project").Type(HttpVerbs.Post)))
     )
 </div>
 

@@ -29,5 +29,10 @@ namespace UI.Controllers
 
             return View();
         }
+
+        public ActionResult AddUserProject() 
+        {
+            return View();
+        }
     }   
 }

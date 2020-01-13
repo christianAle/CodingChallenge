@@ -15,7 +15,7 @@
         });
 
     } else {
-        alert("don't send");
+        alert("please complete the fileds");
     }
 }
 

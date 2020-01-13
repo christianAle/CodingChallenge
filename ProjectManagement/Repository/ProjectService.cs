@@ -21,24 +21,8 @@ namespace Repository
                 }
             }
             catch (DbEntityValidationException ex) {
-               var messgae=  ex.Message;
             }
            
-        }
-
-        public void Delete(Project entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Project FindById(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Project entity)
-        {
-            throw new NotImplementedException();
         }
 
         public List<Project> Retrive()

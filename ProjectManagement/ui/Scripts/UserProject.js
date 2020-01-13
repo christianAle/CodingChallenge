@@ -17,7 +17,25 @@
         });
 
     } else {
-        alert("don't send");
+        alert("please complete the fileds");
     }
+}
+
+function onProjectsChange()
+{
+    var id = $("#Users").val();
+    var grid = $("#projects").data("kendoGrid");
+    $.ajax({
+        url: "/UserProject/UserProject",
+        type: 'POST',
+        data: id,
+        success: function (data) {
+            var grid = $("#projects").data("kendoGrid");
+            grid.setDataSource(dataSource);
+            grid.setDataSource(data);
+            //$("#projects").data("kendoGrid").read();
+        }
+    });
+    
 }
 

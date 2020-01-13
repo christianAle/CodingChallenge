@@ -1,0 +1,76 @@
+﻿@using UI.Models
+@model UserProject
+@{
+}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <form id="userForm">
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(x => x.User)
+                </div>
+                @(Html.Kendo().DropDownListFor(x => x.User)
+                 .Name("Users")
+                 .DataTextField("FirstName")
+                 .DataValueField("Id")
+                 .DataSource(source =>
+                    {
+                        source.Read(read =>
+                        {
+                            read.Action("GetUsers", "UserProject").Type(HttpVerbs.Post);
+                        });
+                    })
+                )
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(x => x.Project)
+                </div>
+                @(Html.Kendo().DropDownListFor(x => x.Project)
+                 .Name("Projects")
+                 .DataTextField("Id")
+                 .DataValueField("Id")
+                 .DataSource(source =>
+                    {
+                        source.Read(read =>
+                        {
+                            read.Action("GetProjects", "UserProject").Type(HttpVerbs.Post);
+                        });
+                    })
+
+                )
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(x => x.isActive)
+                </div>
+                @Html.DropDownListFor(m => m.isActive, new SelectList(
+                new[]
+                    {
+                        new { Value = "true", Text = "Active" },
+                        new { Value = "false", Text = "Inactive" },
+                    },
+                    "Value",
+                    "Text",
+                    Model
+
+               ))
+
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(x => x.AssignedDate)
+                </div>
+                @(Html.Kendo().DatePickerFor(x => x.AssignedDate)
+                                .Name("AssignedDate")
+                )
+            </div>
+            <div class="form-group">
+                <button onclick="saveUserProject()" class="btn btn-primary pull-left">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+@Scripts.Render("~/Scripts/UserProject.js")

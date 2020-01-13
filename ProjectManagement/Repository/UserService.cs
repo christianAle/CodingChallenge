@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Repository
 {
-   public class UserService
+   public class UserService :IRepository<User>
     {
-        public void  CreateUser(User user) {
+        public void  Create(User user) {
            
             using (var db = new CodeChallengeEntities())
             {
@@ -18,7 +18,7 @@ namespace Repository
             }
         }
 
-        public List<User> getAll() {
+        public List<User> Retrive() {
             var userList = new List<User>();
 
             using (var db = new CodeChallengeEntities())
@@ -31,5 +31,6 @@ namespace Repository
             }
             return userList;
         }
+
     }
 }

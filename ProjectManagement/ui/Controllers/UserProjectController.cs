@@ -79,21 +79,12 @@ namespace UI.Controllers
 
         }
 
-        //public T convertObject<T>( T entityToConvert, T Dynamic ) 
-        //{
-        //    var serializeObject = JsonConvert.SerializeObject(entityToConvert);
-        //    var DeserializeObject = JsonConvert.DeserializeObject(serializeObject, typeof(targetObject));
-        //    T = DeserializeObject;
-
-        //    return  T;
-        //}
-
          [HttpPost]
         public JsonResult GetUsers([DataSourceRequest] DataSourceRequest request)
         {
             try
             {
-                var result = UserService.getAll();
+                var result = UserService.Retrive();
                 var UserList = new List<Models.User>();
                 if (result != null)
                 {
@@ -121,7 +112,7 @@ namespace UI.Controllers
 
         [HttpPost]
 
-        public JsonResult GetProjects([DataSourceRequest] DataSourceRequest request)
+        public JsonResult GetProjects(int id )
         {
             try
             {

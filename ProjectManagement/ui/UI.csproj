@@ -190,6 +190,7 @@
     <Content Include="Views\Home\User.cshtml" />
     <Content Include="Views\Home\Project.cshtml" />
     <Content Include="Views\Home\UserProject.cshtml" />
+    <Content Include="Views\Home\AddUserProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Site.css" />
