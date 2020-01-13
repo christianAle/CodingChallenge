@@ -78,7 +78,7 @@
 </div>
 
 <div class="container">
-    @(Html.Kendo().Grid<UserProject>()
+    @(Html.Kendo().Grid<Project>()
     .Name("UserProject")
     .Columns(columns =>
     {
@@ -99,7 +99,7 @@
           model.Field(x => x.isActive);
 
       })
-      .Read(read => read.Action("GetUserProjects", "UserProject").Type(HttpVerbs.Post)))
+      
     )
 </div>
 
